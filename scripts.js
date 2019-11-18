@@ -10,6 +10,7 @@ var winCombs = [
     [0, 4, 8],
     [6, 4, 2]
 ];
+var winner = '';
 const cells = document.querySelectorAll(".cell");
 startGame();
 
@@ -37,6 +38,7 @@ function aiTurn() {
         }
     }
     if (checkForWinner()) {
+        document.querySelector(".winLabel").innerText = 'AI Won';
         //document.querySelector('.end-game').style.display = 'inline-block';
         //document.querySelector('.end-game').innerText = ' AI Won!';
         document.querySelector('.restart').style.display = 'inline-block';
@@ -65,11 +67,14 @@ function turnClick($event) {
     if ($event.target.innerText !== 'X' && $event.target.innerText !== 'O') {
         $event.target.innerText = 'X';
         if (checkForWinner()) {
-            document.querySelector(".winLabel").innerText = 'You won!';
+            document.querySelector(".winLabel").innerText = 'You Won';
             //document.querySelector('.end-game').style.display = 'inline-block';
             document.querySelector('.restart').style.display = 'inline-block';
         } else {
             aiTurn();
+        }
+        if(winCombs.every(comb => comb.every(index => cells[index] === 'X' || cells[index] === 'O' ))){
+            document.querySelector(".winLabel").innerText = 'Match Drawn';
         }
     }
 }
@@ -83,15 +88,21 @@ function resetStyles() {
 function checkForWinner() {
     console.log('checking for Winner');
     winnerFound = false;
-    winCombs.forEach((comb) => {
+
+    for (const comb of winCombs) {
         if (comb.every((index) => cells[index].innerText === 'X')) {
             winnerFound = true;
             comb.forEach(index => cells[index].style.backgroundColor = '#ADFF2F');
+            winner = 'X';
+            break;
         } else if (comb.every((index) => cells[index].innerText === 'O')) {
             winnerFound = true;
             comb.forEach(index => cells[index].style.backgroundColor = '#FF0000');
+            winner = 'O';
+            break;
         }
-    });
+    }
+
     if (winnerFound) {
         console.log('Winner found')
     }
