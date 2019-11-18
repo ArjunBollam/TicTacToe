@@ -1,0 +1,15 @@
+{
+    "short_name": "TicTacToe Game",
+    "name": "TicTacToe Game",
+    "description": "Start playing tic tac toe",
+    "icons": [{
+      "src": "/assets/tictactoe.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    }],
+    "start_url": "/",
+    "background_color": "#F95240",
+    "theme_color": "#F95240",
+    "display": "standalone",
+    "orientation": "portrait"
+  }

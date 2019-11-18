@@ -1,0 +1,60 @@
+.cell {
+   border: 1px solid black;
+   width:50px;
+   height: 50px; 
+   cursor: pointer;
+   text-align: center;
+}
+.end-game {
+    width: 100px;
+    display: none;
+    height: 30px;
+    position: relative;
+    left: 25%;
+    border: 1px solid black;
+    z-index: 99999;
+    top: -50px;
+    text-align: center;
+    font-family: sans-serif;
+    background-color: #e8d1d1;
+    padding-top: 10px;
+}
+.restart {
+    display: none;
+}
+
+table {
+    border-collapse: collapse !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -150px !important;
+    top:10% !important;
+    width: auto !important;
+}
+
+table tr:first-child td {
+    border-top: none !important;
+}
+
+table tr:last-child td {
+    border-bottom: none !important;
+}
+
+table tr td:first-child {
+    border-left: none !important;
+}
+
+table tr td:last-child {
+    border-right: none !important;
+}
+
+.board {
+    width: 500px;
+}
+
+@media screen and (min-width:379px) {
+    .board {
+        width: 90%;
+        height: auto;
+    }
+}
