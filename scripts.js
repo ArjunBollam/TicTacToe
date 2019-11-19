@@ -18,7 +18,7 @@ function startGame() {
     resetStyles();
     //document.querySelector('.end-game').style.display = 'none';
     document.querySelector('.restart').style.display = 'none';
-    document.querySelector(".winLabel").innerText = '';
+    document.querySelector(".winLabel").innerText = ''; 
     origBoard = Array.from(Array(9).keys());
     for (let i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
@@ -27,12 +27,17 @@ function startGame() {
     }
 }
 
-function aiTurn() {
+function aiTurn() { 
     let moveMade = false;
+    if (checkIfAllCellsFilled()) {
+        document.querySelector(".winLabel").innerText = 'Match Drawn';
+        document.querySelector('.restart').style.display = 'inline-block';
+        return;
+    }
     while (moveMade === false) {
         //let index = getRandomInt(9);
         let index = getRightMoveIndex();
-        if (cells[index].innerText !== 'X' && cells[index].innerText !== 'O') {
+        if (index && cells[index].innerText !== 'X' && cells[index].innerText !== 'O') {
             cells[index].innerText = 'O';
             moveMade = true;
         }
@@ -45,11 +50,24 @@ function aiTurn() {
     }
 }
 
+function reset() {
+    winner = '';
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
 function getRightMoveIndex() {
+    let partnerWinningComb = getPartnerWinningComb();
+    if (partnerWinningComb.length > 0) {
+        let index = partnerWinningComb.filter(i => {
+            if (cells[i].innerText === '') {
+                return true;
+            }
+        });
+        return index;
+    }
     let index;
     winCombs.forEach((comb) => {
         comb.forEach((i) => {
@@ -57,11 +75,32 @@ function getRightMoveIndex() {
                 index = i;
             }
         })
-    })
+    });
     return index;
 }
 
+function getPartnerWinningComb() {
+    let arr = [];
+    outerLoop:
+    for (const comb of winCombs) {
+        innerLoop:
+        for (let i = 0; i < comb.length - 1; i++) {
+            if (comb.filter(value => cells[value].innerText === 'X').length === 2) {
+                if (comb.some(i => cells[i].innerText === '')) {
+                    arr = comb;
+                    break outerLoop;
+                }
+            }
+        }
+    }
+    return arr;
+}
+
 function turnClick($event) {
+    if (winner !== '') {
+        //reset();
+        return;
+    }
     console.log($event);
     console.log('clicked');
     if ($event.target.innerText !== 'X' && $event.target.innerText !== 'O') {
@@ -70,18 +109,25 @@ function turnClick($event) {
             document.querySelector(".winLabel").innerText = 'You Won';
             //document.querySelector('.end-game').style.display = 'inline-block';
             document.querySelector('.restart').style.display = 'inline-block';
-        } else {
+        } else if (checkIfAllCellsFilled()) {
+            document.querySelector(".winLabel").innerText = 'Match Drawn';
+            document.querySelector('.restart').style.display = 'inline-block';
+        } else { 
             aiTurn();
         }
-        if(winCombs.every(comb => comb.every(index => cells[index] === 'X' || cells[index] === 'O' ))){
-            document.querySelector(".winLabel").innerText = 'Match Drawn';
-        }
+    } 
+}  
+
+function checkIfAllCellsFilled() {
+    if (winCombs.every(comb => comb.every(value => cells[value].innerText === 'X' || cells[value].innerText === 'O'))) {
+        return true;
     }
 }
 
 function resetStyles() {
-    winCombs.forEach((comb) => {       
-            comb.forEach(index => cells[index].style.backgroundColor = 'transparent');
+    winner = '';
+    winCombs.forEach((comb) => {
+        comb.forEach(index => cells[index].style.backgroundColor = 'transparent');
     });
 }
 

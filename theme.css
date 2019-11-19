@@ -26,9 +26,8 @@
 table {
     border-collapse: collapse !important;
     position: relative !important;
-    left: 50% !important;
-    margin-left: -150px !important;
-    top:10% !important;
+    margin: 0 auto;
+    top: 10% !important;
     width: auto !important;
 }
 
