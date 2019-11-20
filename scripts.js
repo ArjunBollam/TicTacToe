@@ -62,21 +62,29 @@ function getRandomInt(max) {
 
 function getRightMoveIndex() {
     let centerIndex = 4;
+    let priorityComb = getPriorityComb();
     if(boardIndexes.filter(value => cells[value].innerText === 'O').length === 0) {
         if(cells[centerIndex].innerText !== 'X') {
             return centerIndex;
         }
     } 
-    let partnerWinningComb = getPartnerWinningComb();
+
+    if(priorityComb.length > 0) {
+       if(boardIndexes.filter(value => cells[value].innerText === 'X').length === 2) {
+           return priorityComb.findIndex(value => cells[value].innerText === '');
+       }
+    }
+
+    let partnerWinningComb = getPartnerWinningComb(); 
     let aiWinningComb = getAIWinningComb();
     if(aiWinningComb.length > 0) {
         let index = aiWinningComb.filter(i => {
             if (cells[i].innerText === '') { 
                 return true;
             }
-        });
+        }); 
         return index;
-    } 
+    }  
 
     if (partnerWinningComb.length > 0) {
         let index = partnerWinningComb.filter(i => {
@@ -127,6 +135,16 @@ function getAIWinningComb() {
     }
 
     return arr;
+}
+
+function getPriorityComb() {
+     let comb = [0,6,8];
+     if(comb.filter(value => cells[value].innerText === 'X').length === 2){
+        if(comb.some(i => cells[i].innerText === '')) {
+           return comb;
+         }
+     }
+     return [];
 }
 
 function turnClick($event) {
