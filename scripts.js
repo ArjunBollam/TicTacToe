@@ -58,8 +58,18 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function getRightMoveIndex() {
+function getRightMoveIndex() { 
     let partnerWinningComb = getPartnerWinningComb();
+    let aiWinningComb = getAIWinningComb();
+    if(aiWinningComb.length > 0) {
+        let index = aiWinningComb.filter(i => {
+            if (cells[i].innerText === '') { 
+                return true;
+            }
+        });
+        return index;
+    } 
+
     if (partnerWinningComb.length > 0) {
         let index = partnerWinningComb.filter(i => {
             if (cells[i].innerText === '') {
@@ -96,11 +106,26 @@ function getPartnerWinningComb() {
     return arr;
 }
 
+function getAIWinningComb() {
+    let arr = [];
+    loop:
+    for (const comb of winCombs) {
+         if(comb.filter(value => cells[value].innerText === 'O').length === 2) {
+             if(comb.some(i => cells[i].innerText === '')) {
+                arr = comb;
+                break;
+             }
+         }
+    }
+
+    return arr;
+}
+
 function turnClick($event) {
     if (winner !== '') {
         //reset();
         return;
-    }
+    } 
     console.log($event);
     console.log('clicked');
     if ($event.target.innerText !== 'X' && $event.target.innerText !== 'O') {

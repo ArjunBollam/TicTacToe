@@ -49,11 +49,12 @@ table tr td:last-child {
 
 .board {
     width: 500px;
+    margin-top: 10%;
 }
 
 @media screen and (min-width:379px) {
     .board {
         width: 90%;
         height: auto;
-    }
+    } 
 }
