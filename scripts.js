@@ -67,7 +67,7 @@ function getRightMoveIndex() {
         if(cells[centerIndex].innerText !== 'X') {
             return centerIndex;
         }
-    } 
+    }  
 
     if(priorityComb.length > 0) {
        if(boardIndexes.filter(value => cells[value].innerText === 'X').length === 2) {

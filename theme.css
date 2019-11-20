@@ -54,7 +54,24 @@ table tr td:last-child {
 
 @media screen and (min-width:379px) {
     .board {
-        width: 90%;
+        width: 100%;
         height: auto;
+    }  
+}
+
+@media only screen  and (width : 414px)  and (height : 896px) {
+    .board {
+        width: 100%;
+        height: auto;
+        margin-top: 20%;
     } 
 }
+
+@media only screen  and (width : 375px)  and (height : 812px) {
+    .board {
+        width: 100%;
+        height: auto;
+        margin-top: 20%;
+    } 
+}
+
