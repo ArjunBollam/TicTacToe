@@ -36,14 +36,14 @@ function aiTurn() {
         document.querySelector('.restart').style.display = 'inline-block';
         return;
     }
-    while (moveMade === false) {
-        //let index = getRandomInt(9);
+    
+        //let index = getRandomInt(9); 
         let index = getRightMoveIndex();
-        if (index && cells[index].innerText !== 'X' && cells[index].innerText !== 'O') {
+        if (index !== undefined && cells[index].innerText !== 'X' && cells[index].innerText !== 'O') {
             cells[index].innerText = 'O';
             moveMade = true;
         }
-    }
+
     if (checkForWinner()) {
         document.querySelector(".winLabel").innerText = 'AI Won';
         //document.querySelector('.end-game').style.display = 'inline-block';
@@ -82,26 +82,19 @@ function getRightMoveIndex() {
             if (cells[i].innerText === '') { 
                 return true;
             }
-        }); 
-        return index;
+        });  
+        return index; 
     }  
 
     if (partnerWinningComb.length > 0) {
         let index = partnerWinningComb.filter(i => {
-            if (cells[i].innerText === '') {
+            if (cells[i].innerText === '') { 
                 return true;
             }
         });
         return index;
-    }
-    let index;
-    winCombs.forEach((comb) => { 
-        comb.forEach((i) => {
-            if (cells[i].innerText !== 'X' && cells[i].innerText !== 'O') {
-                index = i;
-            }
-        })
-    });
+    } 
+    let index = boardIndexes.find(i => cells[i].innerText === '');
     return index; 
 }
 
