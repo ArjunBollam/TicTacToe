@@ -10,6 +10,8 @@ var winCombs = [
     [0, 4, 8],
     [6, 4, 2]
 ];
+
+let boardIndexes = [0,1,2,3,4,5,6,7,8];
 var winner = '';
 const cells = document.querySelectorAll(".cell");
 startGame();
@@ -58,7 +60,13 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function getRightMoveIndex() { 
+function getRightMoveIndex() {
+    let centerIndex = 4;
+    if(boardIndexes.filter(value => cells[value].innerText === 'O').length === 0) {
+        if(cells[centerIndex].innerText !== 'X') {
+            return centerIndex;
+        }
+    } 
     let partnerWinningComb = getPartnerWinningComb();
     let aiWinningComb = getAIWinningComb();
     if(aiWinningComb.length > 0) {
@@ -79,14 +87,14 @@ function getRightMoveIndex() {
         return index;
     }
     let index;
-    winCombs.forEach((comb) => {
+    winCombs.forEach((comb) => { 
         comb.forEach((i) => {
             if (cells[i].innerText !== 'X' && cells[i].innerText !== 'O') {
                 index = i;
             }
         })
     });
-    return index;
+    return index; 
 }
 
 function getPartnerWinningComb() {
